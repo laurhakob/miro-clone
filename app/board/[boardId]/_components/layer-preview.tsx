@@ -4,11 +4,15 @@ import { LayerType } from "@/types/canvas";
 import { useStorage } from "@liveblocks/react/suspense";
 import { memo } from "react";
 import { Rectangle } from "./rectangle";
+import { Ellipse } from "./ellipse";
+import { Text } from "./text";
+import { Note } from "./note";
+import { colorToCss } from "@/lib/utils";
+import { Path } from "./path";
 
 interface LayerPreviewProps {
   id: string;
-  // onLayerPointerDown: (e: React.PointerEvent, layerId: string) => void;
-  onLayerPointerDown: () => void;
+  onLayerPointerDown: (e: React.PointerEvent, layerId: string) => void;
   selectionColor?: string;
 }
 
@@ -23,46 +27,43 @@ export const LayerPreview = memo(
     switch (layer.type) {
       case LayerType.Path:
         return (
-          // <Path
-          //   key={id}
-          //   points={layer.points}
-          //   onPointerDown={(e) => onLayerPointerDown(e, id)}
-          //   x={layer.x}
-          //   y={layer.y}
-          //   fill={layer.fill ? colorToCss(layer.fill) : "#000"}
-          //   stroke={selectionColor}
-          // />
-          <div></div>
+          <Path
+            key={id}
+            points={layer.points}
+            onPointerDown={(e) => onLayerPointerDown(e, id)}
+            x={layer.x}
+            y={layer.y}
+            fill={layer.fill ? colorToCss(layer.fill) : "#000"}
+            stroke={selectionColor}
+          />
+        
         );
-      case LayerType.Note:
+      case LayerType.Note:   
         return (
-          // <Note
-          //   id={id}
-          //   layer={layer}
-          //   onPointerDown={onLayerPointerDown}
-          //   selectionColor={selectionColor}
-          // />
-          <div></div>
+          <Note
+            id={id}
+            layer={layer}
+            onPointerDown={onLayerPointerDown}
+            selectionColor={selectionColor}
+          />
         );
       case LayerType.Text:
         return (
-          // <Text
-          //   id={id}
-          //   layer={layer}
-          //   onPointerDown={onLayerPointerDown}
-          //   selectionColor={selectionColor}
-          // />
-          <div></div>
+          <Text
+            id={id}
+            layer={layer}
+            onPointerDown={onLayerPointerDown}
+            selectionColor={selectionColor}
+          />
         );
       case LayerType.Ellipse:
         return (
-          // <Ellipse
-          //   id={id}
-          //   layer={layer}
-          //   onPointerDown={onLayerPointerDown}
-          //   selectionColor={selectionColor}
-          // />
-          <div></div>
+          <Ellipse
+            id={id}
+            layer={layer}
+            onPointerDown={onLayerPointerDown}
+            selectionColor={selectionColor}
+          />
         );
       case LayerType.Rectangle:
         return (
@@ -72,7 +73,6 @@ export const LayerPreview = memo(
             onPointerDown={onLayerPointerDown}
             selectionColor={selectionColor}
           />
-      
         );
       default:
         console.warn("Unknown layer type");
